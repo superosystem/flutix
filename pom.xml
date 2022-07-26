@@ -11,12 +11,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.gusrylmubarok.spring</groupId>
-    <artifactId>ecommerce-spring-microservice</artifactId>
+    <groupId>com.gusrylmubarok.ecommerce</groupId>
+    <artifactId>ecommerce-spring-microservice-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
         <module>product-service</module>
+        <module>order-service</module>
+        <module>inventory-service</module>
     </modules>
 
     <properties>
