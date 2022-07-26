@@ -1,0 +1,31 @@
+version: '2.6'
+
+services:
+  mongodb:
+    image: mongo:4.4.15
+    ports:
+      - '27017:27017'
+    expose:
+      - '27017'
+    volumes:
+      - "${PWD}/db-data:/data/db"
+      - "${PWD}/mongo-config:/data/configdb"
+
+  mysqldb:
+      image: mysql:8.0
+      restart: always
+      environment:
+        MYSQL_USER: '${DB_USERNAME}'
+        MYSQL_PASSWORD: '${DB_PASSWORD}'
+        MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+      ports:
+        - '3306:3306'
+      expose:
+        - '3306'
+      volumes:
+        - "${PWD}/local_database:/var/lib/mysql"
+
+volumes:
+  local_database:
+  db-data:
+  mongo-config:

@@ -1,11 +1,15 @@
 package com.gusrylmubarok.spring.productservice.service;
 
 import com.gusrylmubarok.spring.productservice.dto.ProductRequest;
+import com.gusrylmubarok.spring.productservice.dto.ProductResponse;
 import com.gusrylmubarok.spring.productservice.model.Product;
 import com.gusrylmubarok.spring.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +26,20 @@ public class ProductService {
                 .build();
         productRepository.save(product);
         log.info("Product {} is saved.", product.getName());
+    }
+
+    public List<ProductResponse> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        // Mapping Entity x Data Object
+        return products.stream().map(this::mapToProductResponse).toList();
+    }
+
+    private ProductResponse mapToProductResponse(Product product) {
+        return ProductResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .build();
     }
 }

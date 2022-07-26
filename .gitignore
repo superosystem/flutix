@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### DotENV ###
+.env
+
+### Local Database ###
+local_database/
+local_database
+db-data/
+db-data
+mongo-config/
+mongo-config
