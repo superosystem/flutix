@@ -44,10 +44,10 @@ class _MainPageState extends State<MainPage> {
               });
             },
             children: <Widget>[
+              // SECT: MOVIE PAGE
               MoviePage(),
-              Center(
-                child: Text("My Tickets"),
-              )
+              // SECT: MY TICKETS
+              Center(child: Text("My Tickets"))
             ],
           ),
           createCustomBottomNavBar(),
