@@ -19,11 +19,13 @@ part 'auth/sign_up.dart';
 
 part 'auth/sign_up_confirm.dart';
 
-part 'auth/sign_up_refs.dart';
+part 'auth/sign_up_pref.dart';
 
 part 'main_page.dart';
 
 part 'movie/movie_page.dart';
+
+part 'movie/movie_detail_page.dart';
 
 part 'splash/splash_screen.dart';
 

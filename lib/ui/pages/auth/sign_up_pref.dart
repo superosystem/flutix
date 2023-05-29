@@ -11,9 +11,9 @@ class SignUpPreferencePage extends StatefulWidget {
   ];
 
   final List<String> languages = [
-    "Bahasa",
     "English",
-    "japanese",
+    "Indonesian",
+    "Japanese",
     "Korean",
   ];
   final SignUpModel signUpData;

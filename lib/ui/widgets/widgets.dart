@@ -7,6 +7,8 @@ part 'button_browse.dart';
 
 part 'comming_soon_card.dart';
 
+part 'credit_card.dart';
+
 part 'movie_card.dart';
 
 part 'rating_stars.dart';

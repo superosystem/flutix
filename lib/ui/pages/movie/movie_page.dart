@@ -126,7 +126,11 @@ class MoviePage extends StatelessWidget {
                             (index == movies.length - 1) ? defaultMargin : 16),
                     child: MovieCard(
                       movies[index],
-                      onTap: () {},
+                      onTap: () {
+                        context
+                            .read<PageBloc>()
+                            .add(GoToMovieDetailPage(movies[index]));
+                      },
                     ),
                   ),
                 );
