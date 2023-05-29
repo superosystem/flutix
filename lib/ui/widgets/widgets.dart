@@ -1,3 +1,4 @@
+import 'package:flutix/extensions/extensions.dart';
 import 'package:flutix/models/models.dart';
 import 'package:flutix/shared/shared.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ part 'button_browse.dart';
 part 'comming_soon_card.dart';
 
 part 'credit_card.dart';
+
+part 'date_card.dart';
 
 part 'movie_card.dart';
 

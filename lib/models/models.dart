@@ -12,4 +12,8 @@ part 'promo.dart';
 
 part 'sign_up.dart';
 
+part 'theater.dart';
+
+part 'ticket.dart';
+
 part 'user.dart';

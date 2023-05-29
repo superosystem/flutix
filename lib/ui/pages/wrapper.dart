@@ -35,7 +35,9 @@ class Wrapper extends StatelessWidget {
                           ? SignUpAccountConfirmationPage(pageState.signUpData)
                           : (pageState is OnMovieDetailPage)
                               ? MovieDetailPage(pageState.movie)
-                              :  const MainPage(),
+                              : (pageState is OnSelectSchedulePage)
+                                  ? SelectSchedulePage(pageState.movieDetail)
+                                  : const MainPage(),
     );
   }
 }

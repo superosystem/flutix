@@ -12,6 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 
 part 'auth/sign_in.dart';
 
@@ -20,6 +21,8 @@ part 'auth/sign_up.dart';
 part 'auth/sign_up_confirm.dart';
 
 part 'auth/sign_up_pref.dart';
+
+part 'book/select_schedule_page.dart';
 
 part 'main_page.dart';
 

@@ -51,6 +51,7 @@ dependencies:
   image_picker: ^0.8.7+5
   firebase_storage: ^11.2.1
   http: ^0.13.6
+  random_string: ^2.3.1
 
 dev_dependencies:
   flutter_test:
