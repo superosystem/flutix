@@ -21,27 +21,21 @@ class RatingStars extends StatelessWidget {
     int n = (voteAverage / 2).round();
 
     List<Widget> widgets = List.generate(
-      5,
-      (index) => Icon(
-        index < n ? MdiIcons.star : MdiIcons.starOutline,
-        color: Colors.yellow,
-        size: starSize,
-      ),
-    );
+        5,
+        (index) => Icon(
+              index < n ? MdiIcons.star : MdiIcons.starOutline,
+              color: Colors.yellow,
+              size: starSize,
+            ));
 
-    widgets.add(const SizedBox(width: 3));
-
-    widgets.add(
-      Text(
-        "$voteAverage/10",
-        style: whiteNumberFont.copyWith(
-          color: color,
-          fontWeight: FontWeight.w300,
-          fontSize: fontSize,
-        ),
-      ),
-    );
-
+    widgets.add(const SizedBox(
+      width: 3,
+    ));
+    widgets.add(Text(
+      "$voteAverage/10",
+      style: whiteNumberFont.copyWith(
+          color: color, fontWeight: FontWeight.w300, fontSize: fontSize),
+    ));
     return Row(
       mainAxisAlignment: alignment,
       children: widgets,

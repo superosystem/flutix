@@ -10,8 +10,6 @@ class Theater extends Equatable {
 }
 
 List<Theater> dummyTheaters = [
-  const Theater("CGV 23 Paskal Hyper Square"),
-  const Theater("CGV Paris Van Java"),
   const Theater("XXI Cihampelas Walk"),
   const Theater("XXI Bandung Trade Center"),
   const Theater("XXI CSB Cirebon")

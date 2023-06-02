@@ -9,38 +9,43 @@ class GoToSplashPage extends PageEvent {
   List<Object> get props => [];
 }
 
+class GoToLoginPage extends PageEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class GoToMainPage extends PageEvent {
-  @override
-  List<Object> get props => [];
-}
+  final int bottomNavBarIndex;
+  final bool isExpired;
 
-class GoToSignInPage extends PageEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class GoToSignUpPage extends PageEvent {
-  final SignUpModel signUpData;
-
-  const GoToSignUpPage(this.signUpData);
+  const GoToMainPage({this.bottomNavBarIndex = 0, this.isExpired = false});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [bottomNavBarIndex, isExpired];
 }
 
-class GoToSignUpPreferencePage extends PageEvent {
-  final SignUpModel signUpData;
+class GoToRegistrationPage extends PageEvent {
+  final RegistrationData registrationData;
 
-  const GoToSignUpPreferencePage(this.signUpData);
+  const GoToRegistrationPage(this.registrationData);
 
   @override
   List<Object> get props => [];
 }
 
-class GoToSignUpAccountConfirmationPage extends PageEvent {
-  final SignUpModel signUpData;
+class GoToPreferencePage extends PageEvent {
+  final RegistrationData registrationData;
 
-  const GoToSignUpAccountConfirmationPage(this.signUpData);
+  const GoToPreferencePage(this.registrationData);
+
+  @override
+  List<Object> get props => [];
+}
+
+class GoToAccountConfirmationPage extends PageEvent {
+  final RegistrationData registrationData;
+
+  const GoToAccountConfirmationPage(this.registrationData);
 
   @override
   List<Object> get props => [];
@@ -71,4 +76,64 @@ class GoToSelectSeatPage extends PageEvent {
 
   @override
   List<Object> get props => [ticket];
+}
+
+class GoToCheckoutPage extends PageEvent {
+  final Ticket ticket;
+
+  const GoToCheckoutPage(this.ticket);
+
+  @override
+  List<Object> get props => [ticket];
+}
+
+class GoToSuccessPage extends PageEvent {
+  final Ticket ticket;
+  final FlutixTransaction transaction;
+
+  const GoToSuccessPage(this.ticket, this.transaction);
+
+  @override
+  List<Object> get props => [ticket, transaction];
+}
+
+class GoToTicketDetailPage extends PageEvent {
+  final Ticket ticket;
+
+  const GoToTicketDetailPage(this.ticket);
+
+  @override
+  List<Object> get props => [ticket];
+}
+
+class GoToProfilePage extends PageEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class GoToTopUpPage extends PageEvent {
+  final PageEvent pageEvent;
+
+  const GoToTopUpPage(this.pageEvent);
+
+  @override
+  List<Object> get props => [pageEvent];
+}
+
+class GoToWalletPage extends PageEvent {
+  final PageEvent pageEvent;
+
+  const GoToWalletPage(this.pageEvent);
+
+  @override
+  List<Object> get props => [pageEvent];
+}
+
+class GoToEditProfilePage extends PageEvent {
+  final UserApp user;
+
+  const GoToEditProfilePage(this.user);
+
+  @override
+  List<Object> get props => [user];
 }

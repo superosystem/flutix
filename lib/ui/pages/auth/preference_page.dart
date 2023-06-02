@@ -1,6 +1,6 @@
 part of '../pages.dart';
 
-class SignUpPreferencePage extends StatefulWidget {
+class PreferencePage extends StatefulWidget {
   final List<String> genres = [
     "Horror",
     "Music",
@@ -12,19 +12,19 @@ class SignUpPreferencePage extends StatefulWidget {
 
   final List<String> languages = [
     "English",
-    "Indonesian",
+    "Indonesia",
     "Japanese",
     "Korean",
   ];
-  final SignUpModel signUpData;
+  final RegistrationData registrationData;
 
-  SignUpPreferencePage(this.signUpData, {Key? key}) : super(key: key);
+  PreferencePage(this.registrationData, {Key? key}) : super(key: key);
 
   @override
-  _SignUpPreferencePageState createState() => _SignUpPreferencePageState();
+  _PreferencePageState createState() => _PreferencePageState();
 }
 
-class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
+class _PreferencePageState extends State<PreferencePage> {
   List<String> selectedGenres = [];
   String selectedLanguage = "English";
 
@@ -32,9 +32,11 @@ class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.signUpData.password = "";
+        widget.registrationData.password = "";
 
-        context.read<PageBloc>().add(GoToSignUpPage(widget.signUpData));
+        context
+            .read<PageBloc>()
+            .add(GoToRegistrationPage(widget.registrationData));
 
         return Future.value(true);
       },
@@ -52,11 +54,10 @@ class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
                     margin: const EdgeInsets.only(top: 20, bottom: 4),
                     child: GestureDetector(
                         onTap: () {
-                          widget.signUpData.password = "";
+                          widget.registrationData.password = "";
 
-                          context
-                              .read<PageBloc>()
-                              .add(GoToSignUpPage(widget.signUpData));
+                          context.read<PageBloc>().add(
+                              GoToRegistrationPage(widget.registrationData));
                         },
                         child: const Icon(Icons.arrow_back)),
                   ),
@@ -92,32 +93,35 @@ class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
                   ),
                   Center(
                     child: FloatingActionButton(
-                      elevation: 0,
-                      backgroundColor: mainColor,
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        if (selectedGenres.length != 4) {
-                          Flushbar(
-                            duration: const Duration(milliseconds: 1500),
-                            flushbarPosition: FlushbarPosition.TOP,
-                            backgroundColor: const Color(0xFFFF5C83),
-                            message: "Please select 4 genres",
-                          ).show(context);
-                        } else {
-                          widget.signUpData.selectedGenres = selectedGenres;
-                          widget.signUpData.selectedLanguage = selectedLanguage;
+                        elevation: 0,
+                        backgroundColor: mainColor,
+                        child: const Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (selectedGenres.length != 4) {
+                            Flushbar(
+                              duration: const Duration(milliseconds: 1500),
+                              flushbarPosition: FlushbarPosition.TOP,
+                              backgroundColor: const Color(0xFFFF5C83),
+                              message: "Please select 4 genres",
+                            ).show(context);
+                          } else {
+                            widget.registrationData.selectedGenres =
+                                selectedGenres;
+                            widget.registrationData.selectedLang =
+                                selectedLanguage;
 
-                          context.read<PageBloc>().add(
-                              GoToSignUpAccountConfirmationPage(
-                                  widget.signUpData));
-                        }
-                      },
-                    ),
+                            context.read<PageBloc>().add(
+                                GoToAccountConfirmationPage(
+                                    widget.registrationData));
+                          }
+                        }),
                   ),
-                  const SizedBox(height: 50)
+                  const SizedBox(
+                    height: 50,
+                  )
                 ],
               )
             ],
@@ -131,7 +135,7 @@ class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
     double width =
         (MediaQuery.of(context).size.width - 2 * defaultMargin - 24) / 2;
 
-    List<Widget> genre = widget.genres
+    return widget.genres
         .map((e) => SelectableBox(
               e,
               width: width,
@@ -141,15 +145,13 @@ class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
               },
             ))
         .toList();
-
-    return genre;
   }
 
   List<Widget> generateLangWidgets(BuildContext context) {
     double width =
         (MediaQuery.of(context).size.width - 2 * defaultMargin - 24) / 2;
 
-    List<Widget> language = widget.languages
+    return widget.languages
         .map((e) => SelectableBox(
               e,
               width: width,
@@ -161,8 +163,6 @@ class _SignUpPreferencePageState extends State<SignUpPreferencePage> {
               },
             ))
         .toList();
-
-    return language;
   }
 
   void onSelectGenre(String genre) {

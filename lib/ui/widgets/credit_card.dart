@@ -19,7 +19,7 @@ class CreditCard extends StatelessWidget {
                   ? null
                   : DecorationImage(
                       image: NetworkImage(
-                          "${imageBaseUrl}w185${credit.profilePath}"),
+                          "${imageBaseURL}w185${credit.profilePath}"),
                       fit: BoxFit.cover)),
         ),
         Container(

@@ -28,7 +28,7 @@ class DateCard extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
-            color: isSelected ? secondaryAccentColor : Colors.transparent,
+            color: isSelected ? accentColor2 : Colors.transparent,
             border: Border.all(
                 color:
                     isSelected ? Colors.transparent : const Color(0xFFE4E4E4))),

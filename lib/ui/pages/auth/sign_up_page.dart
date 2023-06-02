@@ -1,9 +1,9 @@
 part of '../pages.dart';
 
 class SignUpPage extends StatefulWidget {
-  final SignUpModel signUpData;
+  final RegistrationData registrationData;
 
-  const SignUpPage(this.signUpData, {Key? key}) : super(key: key);
+  const SignUpPage(this.registrationData, {Key? key}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -19,8 +19,8 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
 
-    nameController.text = widget.signUpData.name;
-    emailController.text = widget.signUpData.email;
+    nameController.text = widget.registrationData.name;
+    emailController.text = widget.registrationData.email;
   }
 
   @override
@@ -79,23 +79,24 @@ class _SignUpPageState extends State<SignUpPage> {
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  image: (widget.signUpData.profileImage ==
+                                  image: (widget
+                                              .registrationData.profileImage ==
                                           null)
                                       ? const AssetImage("assets/user_pic.png")
-                                      : FileImage(
-                                              widget.signUpData.profileImage!)
-                                          as ImageProvider,
+                                      : FileImage(widget.registrationData
+                                          .profileImage!) as ImageProvider,
                                   fit: BoxFit.cover)),
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: GestureDetector(
                             onTap: () async {
-                              if (widget.signUpData.profileImage == null) {
-                                widget.signUpData.profileImage =
-                                    await pickImage();
+                              if (widget.registrationData.profileImage ==
+                                  null) {
+                                widget.registrationData.profileImage =
+                                    await ambilImage();
                               } else {
-                                widget.signUpData.profileImage = null;
+                                widget.registrationData.profileImage = null;
                               }
                               setState(() {});
                             },
@@ -105,18 +106,20 @@ class _SignUpPageState extends State<SignUpPage> {
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                      image: AssetImage(
-                                          (widget.signUpData.profileImage ==
-                                                  null)
-                                              ? "assets/btn_add_photo.png"
-                                              : "assets/btn_del_photo.png"))),
+                                      image: AssetImage((widget.registrationData
+                                                  .profileImage ==
+                                              null)
+                                          ? "assets/btn_add_photo.png"
+                                          : "assets/btn_del_photo.png"))),
                             ),
                           ),
                         )
                       ],
                     ),
                   ),
-                  const SizedBox(height: 36),
+                  const SizedBox(
+                    height: 36,
+                  ),
                   TextField(
                     controller: nameController,
                     decoration: InputDecoration(
@@ -148,7 +151,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         labelText: "Password",
                         hintText: "Password"),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   TextField(
                     controller: retypePasswordController,
                     obscureText: true,
@@ -158,58 +163,60 @@ class _SignUpPageState extends State<SignUpPage> {
                         labelText: "Confirm Password",
                         hintText: "Confirm Password"),
                   ),
-                  const SizedBox(height: 30),
-                  FloatingActionButton(
-                    backgroundColor: mainColor,
-                    elevation: 0,
-                    onPressed: () {
-                      if (!(nameController.text.trim() != "" &&
-                          emailController.text.trim() != "" &&
-                          passwordController.text.trim() != "" &&
-                          retypePasswordController.text.trim() != "")) {
-                        Flushbar(
-                          duration: const Duration(milliseconds: 1500),
-                          flushbarPosition: FlushbarPosition.TOP,
-                          backgroundColor: const Color(0xFFFF5C83),
-                          message: "Please fill all the fields",
-                        ).show(context);
-                      } else if (passwordController.text !=
-                          retypePasswordController.text) {
-                        Flushbar(
-                          duration: const Duration(milliseconds: 1500),
-                          flushbarPosition: FlushbarPosition.TOP,
-                          backgroundColor: const Color(0xFFFF3C83),
-                          message: "Mismatch password and confirmed password",
-                        ).show(context);
-                      } else if (passwordController.text.length < 6) {
-                        Flushbar(
-                          duration: const Duration(milliseconds: 1500),
-                          flushbarPosition: FlushbarPosition.TOP,
-                          backgroundColor: const Color(0xFFFF5C83),
-                          message: "Password's length min 6 characters",
-                        ).show(context);
-                      } else if (!EmailValidator.validate(
-                          emailController.text)) {
-                        Flushbar(
-                          duration: const Duration(milliseconds: 1500),
-                          flushbarPosition: FlushbarPosition.TOP,
-                          backgroundColor: const Color(0xFFFF5C83),
-                          message: "Wrong formatted email address",
-                        ).show(context);
-                      } else {
-                        widget.signUpData.name = nameController.text;
-                        widget.signUpData.email = emailController.text;
-                        widget.signUpData.password = passwordController.text;
-                        context
-                            .read<PageBloc>()
-                            .add(GoToSignUpPreferencePage(widget.signUpData));
-                      }
-                    },
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    ),
+                  const SizedBox(
+                    height: 30,
                   ),
+                  FloatingActionButton(
+                      backgroundColor: mainColor,
+                      elevation: 0,
+                      onPressed: () {
+                        if (!(nameController.text.trim() != "" &&
+                            emailController.text.trim() != "" &&
+                            passwordController.text.trim() != "" &&
+                            retypePasswordController.text.trim() != "")) {
+                          Flushbar(
+                            duration: const Duration(milliseconds: 1500),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            backgroundColor: const Color(0xFFFF5C83),
+                            message: "Please fill all the fields",
+                          ).show(context);
+                        } else if (passwordController.text !=
+                            retypePasswordController.text) {
+                          Flushbar(
+                            duration: const Duration(milliseconds: 1500),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            backgroundColor: const Color(0xFFFF3C83),
+                            message: "Mismatch password and confirmed password",
+                          ).show(context);
+                        } else if (passwordController.text.length < 6) {
+                          Flushbar(
+                            duration: const Duration(milliseconds: 1500),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            backgroundColor: const Color(0xFFFF5C83),
+                            message: "Password's length min 6 characters",
+                          ).show(context);
+                        } else if (!EmailValidator.validate(
+                            emailController.text)) {
+                          Flushbar(
+                            duration: const Duration(milliseconds: 1500),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            backgroundColor: const Color(0xFFFF5C83),
+                            message: "Wrong formatted email address",
+                          ).show(context);
+                        } else {
+                          widget.registrationData.name = nameController.text;
+                          widget.registrationData.email = emailController.text;
+                          widget.registrationData.password =
+                              passwordController.text;
+                          context
+                              .read<PageBloc>()
+                              .add(GoToPreferencePage(widget.registrationData));
+                        }
+                      },
+                      child: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      ))
                 ],
               )
             ],

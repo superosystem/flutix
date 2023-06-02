@@ -13,9 +13,7 @@ class PromoCard extends StatelessWidget {
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: mainColor,
-            borderRadius: BorderRadius.circular(15),
-          ),
+              color: mainColor, borderRadius: BorderRadius.circular(15)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -27,10 +25,8 @@ class PromoCard extends StatelessWidget {
                   Text(
                     promo.subtitle,
                     style: whiteTextFont.copyWith(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
+                        fontSize: 11, fontWeight: FontWeight.w300),
+                  )
                 ],
               ),
               Row(
@@ -38,16 +34,12 @@ class PromoCard extends StatelessWidget {
                   Text(
                     "OFF",
                     style: yellowNumberFont.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w300,
-                    ),
+                        fontSize: 18, fontWeight: FontWeight.w300),
                   ),
                   Text(
                     "${promo.discount}%",
                     style: yellowNumberFont.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                        fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ],
               )
@@ -67,12 +59,10 @@ class PromoCard extends StatelessWidget {
             height: 80,
             width: 77.5,
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              ),
-              child: Image.asset("assets/reflection2.png"),
-            ),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15)),
+                child: Image.asset("assets/reflection2.png")),
           ),
         ),
         Align(
@@ -92,11 +82,10 @@ class PromoCard extends StatelessWidget {
               height: 45,
               width: 96,
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(15),
-                ),
-                child: Image.asset("assets/reflection1.png"),
-              ),
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(15),
+                  ),
+                  child: Image.asset("assets/reflection1.png")),
             ),
           ),
         ),

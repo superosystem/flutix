@@ -14,14 +14,12 @@ class BrowseButton extends StatelessWidget {
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: const Color(0xFFEEF1F8),
-            borderRadius: BorderRadius.circular(8),
-          ),
+              color: const Color(0xFFEEF1F8),
+              borderRadius: BorderRadius.circular(8)),
           child: Center(
             child: SizedBox(
-              height: 36,
-              child: Image(image: AssetImage(getImageFromGenre(genre))),
-            ),
+                height: 36,
+                child: Image(image: AssetImage(getImageFromGenre(genre)))),
           ),
         ),
         const SizedBox(

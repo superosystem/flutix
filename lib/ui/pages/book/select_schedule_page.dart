@@ -37,7 +37,7 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
         body: Stack(
           children: <Widget>[
             Container(
-              color: primaryAccentColor,
+              color: accentColor1,
             ),
             SafeArea(
                 child: Container(

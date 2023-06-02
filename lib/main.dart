@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutix/blocs/blocs.dart';
-import 'package:flutix/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
+import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 import 'services/services.dart';
+import 'ui/pages/pages.dart';
 
 Future<void> main() async {
   // Load .env file
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider.value(
-      value: AuthService.userStream,
+      value: AuthServices.userStream,
       initialData: null,
       child: MultiBlocProvider(
         providers: [
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<MovieBloc>(
             create: (ctx) => MovieBloc()..add(FetchMovies()),
           ),
+          BlocProvider<TicketBloc>(create: (ctx) => TicketBloc())
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (ctx, themeState) => MaterialApp(

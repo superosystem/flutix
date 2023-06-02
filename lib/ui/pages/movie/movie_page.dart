@@ -7,19 +7,15 @@ class MoviePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        // SECT: HEADER
+        // note : HEADER
         Container(
           decoration: BoxDecoration(
-              color: primaryAccentColor,
+              color: accentColor1,
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20))),
-          padding: const EdgeInsets.fromLTRB(
-            defaultMargin,
-            20,
-            defaultMargin,
-            30,
-          ),
+          padding:
+              const EdgeInsets.fromLTRB(defaultMargin, 20, defaultMargin, 30),
           child: BlocBuilder<UserBloc, UserState>(builder: (_, userState) {
             if (userState is UserLoaded) {
               if (imageFileToUpload != null) {
@@ -30,41 +26,45 @@ class MoviePage extends StatelessWidget {
                       .add(UpdateData(profileImage: downloadURL, name: ''));
                 });
               }
-
-              // SECT:  PROFILE CARD
               return Row(
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => {},
+                    onTap: () {
+                      context.read<PageBloc>().add(GoToProfilePage());
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                              color: const Color(0xFF5F558B), width: 1)),
+                              color: const Color(0xFF5F5588), width: 1)),
                       child: Stack(
                         children: <Widget>[
                           SpinKitFadingCircle(
-                              color: secondaryAccentColor, size: 50),
+                            color: accentColor2,
+                            size: 50,
+                          ),
                           Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: (userState.user.profilePicture ==
-                                              ""
-                                          ? const AssetImage(
-                                              "assets/user_pic.png")
-                                          : NetworkImage(
-                                                  userState.user.profilePicture)
-                                              as ImageProvider),
-                                      fit: BoxFit.cover))),
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: (userState.user.profilePicture == ""
+                                        ? const AssetImage(
+                                            "assets/user_pic.png")
+                                        : NetworkImage(
+                                                userState.user.profilePicture)
+                                            as ImageProvider),
+                                    fit: BoxFit.cover)),
+                          )
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(
+                    width: 16,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -80,78 +80,84 @@ class MoviePage extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                              NumberFormat.currency(
-                                      locale: "id_ID",
-                                      decimalDigits: 0,
-                                      symbol: "IDR ")
-                                  .format(userState.user.balance),
-                              style: yellowNumberFont.copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w400))),
+                        onTap: () {
+                          context
+                              .read<PageBloc>()
+                              .add(const GoToWalletPage(GoToMainPage()));
+                        },
+                        child: Text(
+                          NumberFormat.currency(
+                                  locale: "id_ID",
+                                  decimalDigits: 0,
+                                  symbol: "IDR ")
+                              .format(userState.user.balance),
+                          style: yellowNumberFont.copyWith(
+                              fontSize: 14, fontWeight: FontWeight.w400),
+                        ),
+                      )
                     ],
                   )
                 ],
               );
             } else {
               return SpinKitFadingCircle(
-                color: secondaryAccentColor,
+                color: accentColor2,
                 size: 50,
               );
             }
           }),
         ),
-
-        // SECT: NOW PLAYING
+        //Now Playing
         Container(
-            margin:
-                const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
-            child: Text('Now Playing',
-                style: blackTextFont.copyWith(
-                    fontSize: 18, fontWeight: FontWeight.bold))),
+          margin:
+              const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
+          child: Text(
+            "Now Playing",
+            style: blackTextFont.copyWith(
+                fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
         SizedBox(
           height: 140,
           child: BlocBuilder<MovieBloc, MovieState>(
-            builder: (_, state) {
-              if (state is MovieLoaded) {
-                List<Movie> movies = state.movies.sublist(0, 10);
+            builder: (_, movieState) {
+              if (movieState is MovieLoaded) {
+                List<Movie> movies = movieState.movies.sublist(0, 10);
 
                 return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: movies.length,
-                  itemBuilder: (_, index) => Container(
-                    margin: EdgeInsets.only(
-                        left: (index == 0) ? defaultMargin : 0,
-                        right:
-                            (index == movies.length - 1) ? defaultMargin : 16),
-                    child: MovieCard(
-                      movies[index],
-                      onTap: () {
-                        context
-                            .read<PageBloc>()
-                            .add(GoToMovieDetailPage(movies[index]));
-                      },
-                    ),
-                  ),
-                );
+                    scrollDirection: Axis.horizontal,
+                    itemCount: movies.length,
+                    itemBuilder: (_, index) => Container(
+                          margin: EdgeInsets.only(
+                              left: (index == 0) ? defaultMargin : 0,
+                              right: (index == movies.length - 1)
+                                  ? defaultMargin
+                                  : 16),
+                          child: MovieCard(movies[index], onTap: () {
+                            context
+                                .read<PageBloc>()
+                                .add(GoToMovieDetailPage(movies[index]));
+                          }),
+                        ));
               } else {
-                return SpinKitFadingCircle(color: primaryAccentColor, size: 50);
+                return SpinKitFadingCircle(
+                  color: mainColor,
+                  size: 50,
+                );
               }
             },
           ),
         ),
-
-        // SECT: BROWSE CATEGORY MOVIE
+        //Browse
         Container(
           margin:
-          const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
+              const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
           child: Text(
             "Browse Movie",
             style: blackTextFont.copyWith(
                 fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-
         BlocBuilder<UserBloc, UserState>(
           builder: (_, userState) {
             if (userState is UserLoaded) {
@@ -161,7 +167,7 @@ class MoviePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(
                       userState.user.selectedGenres.length,
-                          (index) =>
+                      (index) =>
                           BrowseButton(userState.user.selectedGenres[index])),
                 ),
               );
@@ -174,10 +180,10 @@ class MoviePage extends StatelessWidget {
           },
         ),
 
-        //SECT: COMMING SOON
+        //Coming Soon
         Container(
           margin:
-          const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
+              const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
           child: Text(
             "Cooming Soon",
             style: blackTextFont.copyWith(
@@ -195,13 +201,13 @@ class MoviePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: movies.length,
                     itemBuilder: (_, index) => Container(
-                      margin: EdgeInsets.only(
-                          left: (index == 0) ? defaultMargin : 0,
-                          right: (index == movies.length - 1)
-                              ? defaultMargin
-                              : 16),
-                      child: ComingSoonCard(movies[index]),
-                    ));
+                          margin: EdgeInsets.only(
+                              left: (index == 0) ? defaultMargin : 0,
+                              right: (index == movies.length - 1)
+                                  ? defaultMargin
+                                  : 16),
+                          child: ComingSoonCard(movies[index]),
+                        ));
               } else {
                 return SpinKitFadingCircle(
                   color: mainColor,
@@ -213,21 +219,20 @@ class MoviePage extends StatelessWidget {
         ),
         Container(
           margin:
-          const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
+              const EdgeInsets.fromLTRB(defaultMargin, 30, defaultMargin, 12),
           child: Text(
             "Get Lucky Day",
             style: blackTextFont.copyWith(
                 fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-
-        // SECT: PROMO
+        // Promo
         Column(
           children: dummyPromos
               .map((e) => Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  defaultMargin, 0, defaultMargin, 16),
-              child: PromoCard(e)))
+                  padding: const EdgeInsets.fromLTRB(
+                      defaultMargin, 0, defaultMargin, 16),
+                  child: PromoCard(e)))
               .toList(),
         ),
         const SizedBox(

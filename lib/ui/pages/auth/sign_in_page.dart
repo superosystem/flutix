@@ -37,7 +37,9 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 30),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   SizedBox(
                     height: 70,
                     child: Image.asset("assets/logo.png"),
@@ -45,7 +47,7 @@ class _SignInPageState extends State<SignInPage> {
                   Container(
                     margin: const EdgeInsets.only(top: 70, bottom: 40),
                     child: Text(
-                      "Welcome Back,\nExplorer",
+                      "Welcome Back,,\nExplorer",
                       style: blackTextFont.copyWith(fontSize: 20),
                     ),
                   ),
@@ -75,14 +77,15 @@ class _SignInPageState extends State<SignInPage> {
                     controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: "Password",
-                      hintText: "Password",
-                    ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: "Password",
+                        hintText: "Password"),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(
+                    height: 6,
+                  ),
                   Row(
                     children: <Widget>[
                       Text(
@@ -90,7 +93,6 @@ class _SignInPageState extends State<SignInPage> {
                         style: greyTextFont.copyWith(
                             fontSize: 12, fontWeight: FontWeight.w400),
                       ),
-                      const SizedBox(width: 2),
                       Text(
                         "Get Now",
                         style: purpleTextFont.copyWith(fontSize: 12),
@@ -118,7 +120,7 @@ class _SignInPageState extends State<SignInPage> {
                                       });
 
                                       SignInSignUpResult result =
-                                          await AuthService.signIn(
+                                          await AuthServices.signIn(
                                               emailController.text,
                                               passwordController.text);
 
@@ -143,8 +145,7 @@ class _SignInPageState extends State<SignInPage> {
                                 color: isEmailValid && isPasswordValid
                                     ? Colors.white
                                     : const Color(0xFFBEBEBE),
-                              ),
-                            ),
+                              )),
                     ),
                   ),
                   Row(
@@ -154,16 +155,10 @@ class _SignInPageState extends State<SignInPage> {
                         style:
                             greyTextFont.copyWith(fontWeight: FontWeight.w400),
                       ),
-                      const SizedBox(width: 2),
-                      GestureDetector(
-                        onTap: () {
-                          context.read<PageBloc>().add(GoToSignInPage());
-                        },
-                        child: Text(
-                          "Sign Up",
-                          style: purpleTextFont,
-                        ),
-                      ),
+                      Text(
+                        "Sign Up",
+                        style: purpleTextFont,
+                      )
                     ],
                   )
                 ],

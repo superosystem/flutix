@@ -52,6 +52,7 @@ dependencies:
   firebase_storage: ^11.2.1
   http: ^0.13.6
   random_string: ^2.3.1
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

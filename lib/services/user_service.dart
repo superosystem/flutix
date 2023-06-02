@@ -1,28 +1,24 @@
 part of 'services.dart';
 
-class UserService {
-  // Instancing fire store user collection
+class UserServices {
   static final CollectionReference _userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  // Method to saving updated user data to fire store
-  static Future<void> updateUser(UserModel user) async {
+  static Future<void> updateUser(UserApp user) async {
     _userCollection.doc(user.id).set({
       'email': user.email,
       'name': user.name,
+      'balance': user.balance,
       'selectedGenres': user.selectedGenres,
       'selectedLanguage': user.selectedLanguage,
-      'profilePicture': user.profilePicture,
-      'balance': user.balance
+      'profilePicture': user.profilePicture
     });
   }
 
-  // Method to getting user data from fire store
-  static Future<UserModel> getUser(String id) async {
+  static Future<UserApp> getUser(String id) async {
     DocumentSnapshot snapshot = await _userCollection.doc(id).get();
-    // Map<String, dynamic> data = snapshot.data as Map<String, dynamic>;
 
-    return UserModel(
+    return UserApp(
       id,
       (snapshot.data() as dynamic)['email'],
       balance: (snapshot.data() as dynamic)['balance'],

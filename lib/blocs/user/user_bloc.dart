@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutix/models/models.dart';
-import 'package:flutix/services/services.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../models/models.dart';
+import '../../services/services.dart';
 
 part 'user_event.dart';
 
@@ -14,20 +16,52 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(UserInitial()) {
     on<UserEvent>((event, emit) async {
       if (event is LoadUser) {
-        UserModel user = await UserService.getUser(event.id);
+        UserApp user = await UserServices.getUser(event.id);
 
         emit(UserLoaded(user));
       } else if (event is SignOut) {
         emit(UserInitial());
       } else if (event is UpdateData) {
-        UserModel updatedUser = (state as UserLoaded).user.copyWith(
+        UserApp updatedUser = (state as UserLoaded).user.copyWith(
               name: event.name,
               profilePicture: event.profileImage,
             );
 
-        await UserService.updateUser(updatedUser);
+        await UserServices.updateUser(updatedUser);
 
         emit(UserLoaded(updatedUser));
+      } else if (event is TopUp) {
+        if (state is UserLoaded) {
+          try {
+            UserApp updateUser = (state as UserLoaded).user.copyWith(
+                balance: (state as UserLoaded).user.balance + event.amount,
+                name: '',
+                profilePicture: '');
+
+            await UserServices.updateUser(updateUser);
+            emit(UserLoaded(updateUser));
+          } catch (e) {
+            if (kDebugMode) {
+              print(e);
+            }
+          }
+        }
+      } else if (event is Purchase) {
+        if (state is UserLoaded) {
+          try {
+            UserApp updateUser = (state as UserLoaded).user.copyWith(
+                balance: (state as UserLoaded).user.balance - event.amount,
+                name: '',
+                profilePicture: '');
+
+            await UserServices.updateUser(updateUser);
+            emit(UserLoaded(updateUser));
+          } catch (e) {
+            if (kDebugMode) {
+              print(e);
+            }
+          }
+        }
       }
     });
   }

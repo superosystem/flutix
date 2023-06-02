@@ -1,8 +1,9 @@
 part of 'services.dart';
 
-class MovieService {
+class MovieServices {
   static Future<List<Movie>> getMovies(int page, {http.Client? client}) async {
-    String url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=$page&with_watch_monetization_types=flatrate";
+    String url =
+        "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=$page&with_watch_monetization_types=flatrate";
 
     client ??= http.Client();
 
@@ -46,17 +47,17 @@ class MovieService {
     }
     return movieID != null
         ? MovieDetail(Movie.fromJson(data),
-        language: language,
-        genres: genres
-            .map((e) => (e as Map<String, dynamic>)['name'].toString())
-            .toList())
+            language: language,
+            genres: genres
+                .map((e) => (e as Map<String, dynamic>)['name'].toString())
+                .toList())
         : MovieDetail(movie!,
-        language: language,
-        genres: genres
-            .map((e) => (e as Map<String, dynamic>)['name'].toString())
-            .toList());
+            language: language,
+            genres: genres
+                .map((e) => (e as Map<String, dynamic>)['name'].toString())
+                .toList());
   }
-  
+
   static Future<List<Credit>> getCredits(int movieID,
       {http.Client? client}) async {
     String url =
@@ -69,8 +70,8 @@ class MovieService {
 
     return ((data as Map<String, dynamic>)['cast'] as List)
         .map((e) => Credit(
-        name: (e as Map<String, dynamic>)['name'],
-        profilePath: (e as Map<String, dynamic>)['profile_path']))
+            name: (e as Map<String, dynamic>)['name'],
+            profilePath: (e as Map<String, dynamic>)['profile_path']))
         .take(8)
         .toList();
   }

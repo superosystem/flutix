@@ -1,18 +1,17 @@
 part of '../pages.dart';
 
-class SignUpAccountConfirmationPage extends StatefulWidget {
-  final SignUpModel signUpData;
+class AccountConfirmationPage extends StatefulWidget {
+  final RegistrationData registrationData;
 
-  const SignUpAccountConfirmationPage(this.signUpData, {Key? key})
+  const AccountConfirmationPage(this.registrationData, {Key? key})
       : super(key: key);
 
   @override
-  State<SignUpAccountConfirmationPage> createState() =>
-      _SignUpAccountConfirmationPageState();
+  _AccountConfirmationPageState createState() =>
+      _AccountConfirmationPageState();
 }
 
-class _SignUpAccountConfirmationPageState
-    extends State<SignUpAccountConfirmationPage> {
+class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   bool isSigningUp = false;
 
   @override
@@ -21,8 +20,7 @@ class _SignUpAccountConfirmationPageState
       onWillPop: () async {
         context
             .read<PageBloc>()
-            .add(GoToSignUpPreferencePage(widget.signUpData));
-
+            .add(GoToPreferencePage(widget.registrationData));
         return Future.value(true);
       },
       child: Scaffold(
@@ -44,10 +42,8 @@ class _SignUpAccountConfirmationPageState
                             onTap: () {
                               context.read<PageBloc>().add(GoToSplashPage());
                             },
-                            child: const Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
-                            ),
+                            child: const Icon(Icons.arrow_back,
+                                color: Colors.black),
                           ),
                         ),
                         Center(
@@ -67,9 +63,11 @@ class _SignUpAccountConfirmationPageState
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: (widget.signUpData.profileImage == null)
+                            image: (widget.registrationData.profileImage ==
+                                    null)
                                 ? const AssetImage("assets/user_pic.png")
-                                : FileImage(widget.signUpData.profileImage!)
+                                : FileImage(
+                                        widget.registrationData.profileImage!)
                                     as ImageProvider,
                             fit: BoxFit.cover)),
                   ),
@@ -79,11 +77,13 @@ class _SignUpAccountConfirmationPageState
                         fontSize: 16, fontWeight: FontWeight.w300),
                   ),
                   Text(
-                    widget.signUpData.name,
+                    widget.registrationData.name,
                     textAlign: TextAlign.center,
                     style: blackTextFont.copyWith(fontSize: 20),
                   ),
-                  const SizedBox(height: 110),
+                  const SizedBox(
+                    height: 110,
+                  ),
                   (isSigningUp)
                       ? const SpinKitFadingCircle(
                           color: Color(0xFF3E9D9D),
@@ -93,44 +93,43 @@ class _SignUpAccountConfirmationPageState
                           width: 250,
                           height: 45,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF3E9D9D),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Text(
-                              "Create My Account",
-                              style: whiteTextFont.copyWith(fontSize: 16),
-                            ),
-                            onPressed: () async {
-                              setState(() {
-                                isSigningUp = true;
-                              });
-
-                              imageFileToUpload =
-                                  widget.signUpData.profileImage;
-
-                              SignInSignUpResult result =
-                                  await AuthService.signUp(
-                                      widget.signUpData.email,
-                                      widget.signUpData.password,
-                                      widget.signUpData.name,
-                                      widget.signUpData.selectedGenres,
-                                      widget.signUpData.selectedLanguage);
-                              if (result.user == null) {
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF3E9D9D),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                              child: Text(
+                                "Create My Account",
+                                style: whiteTextFont.copyWith(fontSize: 16),
+                              ),
+                              onPressed: () async {
                                 setState(() {
-                                  isSigningUp = false;
+                                  isSigningUp = true;
                                 });
-                                Flushbar(
-                                  duration: const Duration(milliseconds: 1500),
-                                  flushbarPosition: FlushbarPosition.TOP,
-                                  backgroundColor: const Color(0xFFFF5C83),
-                                  message: result.message,
-                                ).show(context);
-                              }
-                            },
-                          ),
-                        ),
+
+                                imageFileToUpload =
+                                    widget.registrationData.profileImage;
+
+                                SignInSignUpResult result =
+                                    await AuthServices.signUp(
+                                        widget.registrationData.email,
+                                        widget.registrationData.password,
+                                        widget.registrationData.name,
+                                        widget.registrationData.selectedGenres,
+                                        widget.registrationData.selectedLang);
+                                if (result.user == null) {
+                                  setState(() {
+                                    isSigningUp = false;
+                                  });
+                                  Flushbar(
+                                    duration:
+                                        const Duration(milliseconds: 1500),
+                                    flushbarPosition: FlushbarPosition.TOP,
+                                    backgroundColor: const Color(0xFFFF5C83),
+                                    message: result.message,
+                                  ).show(context);
+                                }
+                              }))
                 ],
               )
             ],

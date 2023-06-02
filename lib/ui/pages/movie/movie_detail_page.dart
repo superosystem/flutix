@@ -12,7 +12,7 @@ class MovieDetailPage extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        context.read<PageBloc>().add(GoToMainPage());
+        context.read<PageBloc>().add(const GoToMainPage());
 
         return Future.value(true);
       },
@@ -20,7 +20,7 @@ class MovieDetailPage extends StatelessWidget {
           body: Stack(
         children: <Widget>[
           Container(
-            color: primaryAccentColor,
+            color: accentColor1,
           ),
           SafeArea(
               child: Container(
@@ -29,7 +29,7 @@ class MovieDetailPage extends StatelessWidget {
           ListView(
             children: <Widget>[
               FutureBuilder(
-                  future: MovieService.getDetails(movie),
+                  future: MovieServices.getDetails(movie),
                   builder: (_, snapshot) {
                     if (snapshot.hasData) {
                       movieDetail = snapshot.data as MovieDetail;
@@ -47,7 +47,7 @@ class MovieDetailPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              "${imageBaseUrl}w1280${movie.backdropPath}"),
+                                              "${imageBaseURL}w1280${movie.backdropPath}"),
                                           fit: BoxFit.cover)),
                                 ),
                                 Container(
@@ -74,7 +74,9 @@ class MovieDetailPage extends StatelessWidget {
                                   color: Colors.black.withOpacity(0.04)),
                               child: GestureDetector(
                                 onTap: () {
-                                  context.read<PageBloc>().add(GoToMainPage());
+                                  context
+                                      .read<PageBloc>()
+                                      .add(const GoToMainPage());
                                 },
                                 child: const Icon(
                                   Icons.arrow_back,
@@ -105,7 +107,7 @@ class MovieDetailPage extends StatelessWidget {
                                 height: 50,
                                 width: 50,
                                 child: SpinKitFadingCircle(
-                                  color: thirdAccentColor,
+                                  color: accentColor3,
                                 ),
                               ),
                         const SizedBox(
@@ -114,7 +116,7 @@ class MovieDetailPage extends StatelessWidget {
                         // note: RATING
                         RatingStars(
                           voteAverage: movie.voteAverage,
-                          color: thirdAccentColor,
+                          color: accentColor3,
                           alignment: MainAxisAlignment.center,
                         ),
                         const SizedBox(
@@ -132,7 +134,7 @@ class MovieDetailPage extends StatelessWidget {
                               )),
                         ),
                         FutureBuilder(
-                            future: MovieService.getCredits(movie.id),
+                            future: MovieServices.getCredits(movie.id),
                             builder: (_, snapshot) {
                               if (snapshot.hasData) {
                                 credits = snapshot.data as List<Credit>;
@@ -156,7 +158,7 @@ class MovieDetailPage extends StatelessWidget {
                                 return SizedBox(
                                     height: 50,
                                     child: SpinKitFadingCircle(
-                                      color: primaryAccentColor,
+                                      color: accentColor1,
                                     ));
                               }
                             }),

@@ -8,7 +8,7 @@ class MainPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
@@ -26,16 +26,16 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF6F7F9),
       body: Stack(
         children: <Widget>[
           Container(
-            color: primaryAccentColor,
+            color: accentColor1,
           ),
           SafeArea(
-            child: Container(
-              color: const Color(0xFFF6F7F9),
-            ),
-          ),
+              child: Container(
+            color: const Color(0xFFF6F7F9),
+          )),
           PageView(
             controller: pageController,
             onPageChanged: (index) {
@@ -44,10 +44,10 @@ class _MainPageState extends State<MainPage> {
               });
             },
             children: <Widget>[
-              // SECT: MOVIE PAGE
-              MoviePage(),
-              // SECT: MY TICKETS
-              Center(child: Text("My Tickets"))
+              const MoviePage(),
+              TicketPage(
+                isExpiredTicket: widget.isExpired,
+              )
             ],
           ),
           createCustomBottomNavBar(),
@@ -59,7 +59,7 @@ class _MainPageState extends State<MainPage> {
               margin: const EdgeInsets.only(bottom: 42),
               child: FloatingActionButton(
                   elevation: 0,
-                  backgroundColor: secondaryAccentColor,
+                  backgroundColor: accentColor2,
                   child: SizedBox(
                     height: 26,
                     width: 26,
@@ -69,8 +69,9 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   onPressed: () {
-                    context.read<UserBloc>().add(SignOut());
-                    AuthService.signOut();
+                    context
+                        .read<PageBloc>()
+                        .add(const GoToTopUpPage(GoToMainPage()));
                   }),
             ),
           )
